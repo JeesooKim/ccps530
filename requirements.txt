@@ -1,6 +1,8 @@
+autoenv==1.0.0
 beautifulsoup4==4.4.1
 certifi==2018.8.24
 Click==7.0
+config==0.4.0
 Flask==0.10.1
 gunicorn==19.4.5
 itsdangerous==1.1.0
