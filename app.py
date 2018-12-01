@@ -10,9 +10,7 @@ from collections import Counter
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-app.config.from_pyfile('config.py')
-#app.config.from_object(os.environ['APP_SETTINGS'])
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/wordcount_dev"
+app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
 
