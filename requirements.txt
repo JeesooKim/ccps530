@@ -1,4 +1,5 @@
 alembic==1.0.5
+beautifulsoup4==4.4.1
 Flask==0.10.1
 Flask-Migrate==1.8.0
 Flask-Script==2.0.6
@@ -8,10 +9,12 @@ itsdangerous==1.1.0
 Jinja2==2.10
 Mako==1.0.7
 MarkupSafe==1.1.0
+nltk==3.2
 pbr==5.1.1
 psycopg2==2.7.6.1
 python-dateutil==2.7.5
 python-editor==1.0.3
+requests==2.9.1
 six==1.11.0
 SQLAlchemy==1.2.14
 stevedore==1.30.0
