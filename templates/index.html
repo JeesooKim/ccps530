@@ -13,43 +13,69 @@
   <body>
     <div class="container">
     	<div class="row">
-        	<div class="col-sm-5 col-sm-offset-1">
-	        	<h1>Wordcount 3000</h1>
-			      <form role="form" method='POST' action='/'>
-			        <div class="form-group">
-			          <input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" autofocus required>
-			        </div>
-			        <button type="submit" class="btn btn-default">Submit</button>
-			      </form>
-			      <br>
-			      {% for error in errors %}
-			        <h4>{{ error }}</h4>
-			      {% endfor %}
-			      <br/>
+        	<div class="col-sm-6" style="text-align:left;">
+	        	<h1>Wordcount 3000 - History</h1>
         	</div>
         	<div class="col-sm-5 col-sm-offset-1">
-        		 {% if results %}
-	            <h2>Frequencies</h2>
-	            <br>
-	            <div id="results">
-	              <table class="table table-striped" style="max-width: 300px;">
-	                <thead>
-	                  <tr>
-	                    <th>Word</th>
-	                    <th>Count</th>
-	                  </tr>
-	                </thead>
-	                {% for result in results%}
-	                  <tr>
-	                    <td>{{ result[0] }}</td>
-	                    <td>{{ result[1] }}</td>
-	                  </tr>
-	                {% endfor %}
-	              </table>
-	            </div>
-	          {% endif %}
-        	</div>
-    	</div>      
+            <p>
+              <a href="wordcount" target="_blank">Link to word count page</a>
+            </p>
+          </div>
+    	</div>
+      <div class="row">          
+          <div class="col-sm-12">
+             {% if results %}
+                <div id="results">
+                  <table class="table table-striped" style="max-width: 300px;">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Url</th>
+                        <th>Timestamp</th>
+                      </tr>
+                    </thead>
+                    {% for result in results%}
+                      <tr>
+                        <td>{{ result[0] }}</td>
+                            <td><a href="{{ result[1] }}" target="_blank">{{ result[1] }}</a></td>
+                            <td>{{ result[2] }}</td>
+                      </tr>
+                    {% endfor %}
+                  </table>
+                </div>
+              {% endif %}
+          </div>
+      </div>
+        <!--<div class="row">
+            <div class="col-sm-5 col-sm-offset-1">
+                <h1>Users</h1>
+            </div>
+            <div class="col-sm-5 col-sm-offset-1">
+                 {% if users %}
+                    <div id="results">
+                      <table class="table table-striped" style="max-width: 300px;">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Created time</th>
+                          </tr>
+                        </thead>
+                        {% for user in users %}
+                          <tr>
+                            <td>{{ user[0] }}</td>
+                            <td>{{ user[1] }}</a></td>
+                            <td>{{ user[2] }}</td>
+                            <td>{{ user[3] }}</td>
+                          </tr>
+                        {% endfor %}
+                      </table>
+                    </div>
+                  {% endif %}
+            </div>
+        </div>
+    	-->
     </div>
     <br/><br/>
     <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
