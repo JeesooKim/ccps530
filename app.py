@@ -54,10 +54,9 @@ def index():
     finally:
         if connection is not None:
             connection.close()
-
-    #return render_template('index.html', myCount=myCount)
-    return render_template('index.html', results = ResultSet, users=UserSet)
-    #return render_template('index.html')
+    
+    #return render_template('index.html', results = ResultSet, users=UserSet)
+    return render_template('index.html', results = ResultSet)
 
 @app.route('/wordcount', methods=['GET', 'POST'])
 def wordcount():
