@@ -2,14 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>File upload Complete</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App - File upload Complete</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
+    <link href="../static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">
+    <link href="../static/content/site.css" rel="stylesheet" media="screen">
+    <script src="../static/scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <h1 class="navbar-brand">Wordcount 3000</h1>
-                <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
+                <div id="navMenu">
+                    <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
+                </div>
             </div>
         </div>
     </div>
@@ -22,7 +30,7 @@
       
        <hr />
        <footer>
-            <p>&copy; {{ year }} - My Flask Application by JEE SOO KIM</p>
+            <p>&copy; 2018 - My Flask Application by JEE SOO KIM</p>
        </footer>
     </div>
 </body>
