@@ -3,11 +3,14 @@ import requests
 import operator
 import re
 import nltk
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from flask.ext.sqlalchemy import SQLAlchemy
 from stop_words import stops
 from collections import Counter
 from bs4 import BeautifulSoup
+#from datetime import timedelta
+#import time
+#from datetime import date
 from sqlalchemy import create_engine
 
 app = Flask(__name__)
@@ -16,11 +19,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
 
 engine =db.create_engine(os.environ['DATABASE_URL'])
-
 from models import Result
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+YEAR=2018
 
 @app.route('/')
-def index():
+def index():    
     """ query data from the results table """
     connection = None
     try:
@@ -34,7 +38,7 @@ def index():
         #print(repr(metadata.tables['results']))
 
         #Equivalent to 'SELECT * FROM census'
-        query = db.select([results.columns.id, results.columns.url, results.columns.timestamp])    
+        query = db.select([results.columns.id, results.columns.url, results.columns.result_no_stop_words, results.columns.timestamp])    
         #query="SELECT url, timestamp FROM results"
         ResultProxy = connection.execute(query)
         #print(ResultProxy)
@@ -47,21 +51,45 @@ def index():
         UserProxy = connection.execute(query2)        
         UserSet = UserProxy.fetchall()
         '''
+
+        '''
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute("SELECT url, timestamp FROM results")
+        data= cur.fetchall()
+
+        print("The number of records: ", cur.rowcount)
+        '''
+        #row = cur.fetchone()
+ 
+        #while row is not None:
+        #    print(row)
+        #    row = cur.fetchone()
+ 
+        #cur.close()
         connection.close()
     #except (Exception, psycopg2.DatabaseError) as error:
     except (Exception, engine.DatabaseError) as error:
+        print("Error!")
         print(error)
     finally:
         if connection is not None:
             connection.close()
+
+    #Get no_stop_words_count [3]
+    #count=ResultProxy.rowcount
+    #no_stop_words_count=ResultSet
     
-    #return render_template('index.html', results = ResultSet, users=UserSet)
-    return render_template('index.html', results = ResultSet)
+    return render_template('index.html', results = ResultSet, year=YEAR) #, users=UserSet)
+    #return render_template('index.html')
 
 @app.route('/wordcount', methods=['GET', 'POST'])
-def wordcount():
+def wordcount():    
     errors = []
     results = {}
+    #if request.method=='GET':
+    #    return('<form action="/test" method="post"><input type="submit" value="Send" /></form>')
     if request.method == "POST":
         # get url that the person has entered
         try:
@@ -77,7 +105,7 @@ def wordcount():
             #return render_template('wordcount', errors=errors)
         if r:
             # text processing
-            #raw = BeautifulSoup(r.text).get_text()
+            #raw = BeautifulSoup(r.text).get_text()            
             raw = BeautifulSoup(r.text, "html.parser").get_text()
             nltk.data.path.append('./nltk_data/')  # set the path
             tokens = nltk.word_tokenize(raw)
@@ -88,26 +116,73 @@ def wordcount():
             raw_word_count = Counter(raw_words)
             # stop words
             no_stop_words = [w for w in raw_words if w.lower() not in stops]
-            no_stop_words_count = Counter(no_stop_words)
+            no_stop_words_count = Counter(no_stop_words)            
+
             # save the results
             results = sorted(
                 no_stop_words_count.items(),
                 key=operator.itemgetter(1),
                 reverse=True
             )[:10]
-
+            
             try:
                 result = Result(
                     url=url,
                     result_all=raw_word_count,
                     result_no_stop_words=no_stop_words_count
                 )
-                db.session.add(result)
-                db.session.commit()
+                #db.session.add(result)
+                #db.session.commit()
             except:
                 errors.append("Unable to add item to database.")
-    return render_template('wordcount.html', errors=errors, results=results)
+    return render_template('wordcount.html', errors=errors, results=results,year=YEAR)
     #return render_template('wordcount', errors=errors, results=results)
+
+@app.route("/image")
+def image():
+    return render_template("upload.html",year=YEAR)
+
+@app.route("/upload", methods=['POST'])
+def upload():
+    print(APP_ROOT)
+
+    target = os.path.join(APP_ROOT, 'images/')
+    #print(target)
+
+    if not os.path.isdir(target):
+        os.mkdir(target)
+    else:
+        print("Couldn't create upload directory: {}".format(target))
+    print(request.files.getlist("file"))
+    '''
+    for file in request.files.getlist("file"):
+        print(file)
+        filename = file.filename
+        destination = "/".join([target, filename])
+        print(destination)
+        file.save(destination)
+        '''
+    for upload in request.files.getlist("file"):
+        print(upload)
+        print("{} is the file name".format(upload.filename))
+        filename = upload.filename
+        destination = "/".join([target, filename])
+        print ("Accept incoming file:", filename)
+        print ("Save it to:", destination)
+        upload.save(destination)
+        
+
+    return render_template("complete.html",image_name=filename,year=YEAR)
+
+@app.route('/upload/<filename>')
+def send_image(filename):
+    return send_from_directory("images", filename)
+
+@app.route('/gallery')
+def get_gallery():
+    image_names = os.listdir('./images')
+    print(image_names)
+    return render_template("gallery.html", image_names=image_names,year=YEAR)
 
 if __name__ == '__main__':
     app.run()

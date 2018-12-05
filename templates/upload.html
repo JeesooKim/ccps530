@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flask App - Image Upload</title>
+    
+    <!--<link href="../static/content/bootstrap.min.css" rel="stylesheet" media="screen">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
+    <link href="../static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">
+    <link href="../static/content/site.css" rel="stylesheet" media="screen">
+    <script src="../static/scripts/modernizr-2.6.2.js"></script>    
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <h1 class="navbar-brand">Wordcount 3000</h1>
+                <div id="navMenu">
+                    <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-sm-5 col-sm-7-offset">
+                <h1>Image Upload</h1>
+                <hr>
+                <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+                <strong>Files:</strong><br>
+                <input id="file-picker" type="file" name="file" accept="image/*" multiple>
+                <div id="msg"></div>
+                <input type="submit" value="Upload!" id="upload-button">
+            </form>
+            </div>            
+        </div>
+         <hr />
+       <footer>
+            <p>&copy; {{ year }} - My Flask Application by JEE SOO KIM</p>
+       </footer>
+    </div>   
+</body>
+    <script>
+
+        $("#file-picker").change(function(){
+
+            var input = document.getElementById('file-picker');
+
+            for (var i=0; i<input.files.length; i++)
+            {
+            //koala.jpg, koala.JPG substring(index) lastIndexOf('a') koala.1.jpg
+                var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+
+                if ((ext == 'jpg') || (ext == 'png'))
+                {
+                    $("#msg").text("Files are supported")
+                }
+                else
+                {
+                    $("#msg").text("Files are NOT supported")
+                    document.getElementById("file-picker").value ="";
+                }
+
+            }
+
+
+        } );
+
+    </script>
+    <script src="../static/scripts/jquery-1.10.2.min.js"></script>
+    <script src="../static/scripts/respond.js"></script>
+    
+    <!--<script src="../static/scripts/bootstrap.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+</html>

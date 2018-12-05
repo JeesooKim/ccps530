@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Wordcount</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style>
-      .container {
-        max-width: 1000px;
-      }
-    </style>
+
+    <title>Flask App</title>    
+        
+    <!--<link href="../static/content/bootstrap.min.css" rel="stylesheet" media="screen">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="../static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">
+    <link href="../static/content/site.css" rel="stylesheet" media="screen">
+    <script src="../static/scripts/modernizr-2.6.2.js"></script>
   </head>
   <body>
-    <div class="container">
-    	<div class="row">
-        	<div class="col-sm-6" style="text-align:left;">
-	        	<h1>Wordcount 3000 - History</h1>
-        	</div>
-        	<div class="col-sm-5 col-sm-offset-1">
-            <p>
-              <a href="wordcount" target="_blank">Link to word count page</a>
-            </p>
-          </div>
-    	</div>
-      <div class="row">          
-          <div class="col-sm-12">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <h1 class="navbar-brand">Wordcount 3000</h1>
+                <div id="navMenu">
+                    <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+      <div class="row">
+          <div class="col-sm-5 col-sm-offset=7">
+            <h1>Search History</h1>
+            <hr>
              {% if results %}
                 <div id="results">
-                  <table class="table table-striped" style="max-width: 300px;">
+                  <!--<table id="tblResults" class="table table-striped" style="max-width: 300px;">-->
+                  <table id="tblResults" class="table table-striped table-bordered" style="width:100%">                    
                     <thead>
                       <tr>
-                        <th>ID</th>
+                            <th>ID</th>
                         <th>Url</th>
-                        <th>Timestamp</th>
+                        <th>JSON</th>
+                            <th>Timestamp</th>
                       </tr>
                     </thead>
                     {% for result in results%}
@@ -39,6 +46,7 @@
                         <td>{{ result[0] }}</td>
                             <td><a href="{{ result[1] }}" target="_blank">{{ result[1] }}</a></td>
                             <td>{{ result[2] }}</td>
+                            <td>{{ result[3] }}</td>
                       </tr>
                     {% endfor %}
                   </table>
@@ -46,7 +54,8 @@
               {% endif %}
           </div>
       </div>
-        <!--<div class="row">
+      
+      <!--<div class="row">
             <div class="col-sm-5 col-sm-offset-1">
                 <h1>Users</h1>
             </div>
@@ -75,10 +84,40 @@
                   {% endif %}
             </div>
         </div>
-    	-->
+       -->
+       <hr />
+       <footer>
+            <p>&copy; {{ year }} - My Flask Application by JEE SOO KIM</p>
+       </footer>
     </div>
-    <br/><br/>
-    <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        
+    <script src="../static/scripts/jquery-1.10.2.min.js"></script>
+    <!--<script src="../static/scripts/bootstrap.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+    <script src="../static/scripts/respond.js"></script>
+    
+    <script src="../static/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="../static/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+          $('#tblResults').DataTable({
+              responsive:true,
+              order: [[ 0, "desc" ]],
+              columnDefs: [ {
+                  targets: [ 1,3 ],
+                  //orderData: [ 0, 1 ]
+                  orderable: false
+              },{
+                  targets: [ 2 ],
+                  //orderData: [ 0, 1 ]
+                  visible: false,
+                  orderable:false
+              }]
+          });
+      } );
+    </script>
   </body>
 </html>
