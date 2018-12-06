@@ -16,7 +16,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
 
-engine =db.create_engine("postgresql://localhost/wordcount_dev")
+engine =db.create_engine(os.environ['DATABASE_URL'])
 from models import Result
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 YEAR=2018
