@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Flask App - Image Gallery</title>
+    <title>Flask Lab - Image Gallery</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="../static/bootstrap-lightbox/bootstrap-lightbox.min.css" rel="stylesheet" media="screen">
     <link href="../static/content/site.css" rel="stylesheet" media="screen">
+
+
+    <script src="../static/scripts/jquery-1.10.2.min.js"></script>
+    <script src="../static/scripts/galleria/galleria-1.5.7.min.js"></script>
+    <script src="../static/bootstrap-lightbox/bootstrap-lightbox.min.js"></script>
+
+    <style>
+        /*.galleria{ max-width: 700px; height: 400px; background: #000 }*/
+        .galleria{ max-width:990px; height: 566px; background: #000 }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <h1 class="navbar-brand">Wordcount 3000</h1>
+                <h1 class="navbar-brand"><a href="/">Flask Lab</a> || </h1>
                 <div id="navMenu">
                     <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
                 </div>
@@ -22,25 +33,50 @@
     </div>
     <div class="container body-content">
         <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Thumbnail Gallery</h1>
+            <div class="col-sm-12">
+                <h1 class="page-header">Galleria - jQuery image gallery</h1>
             </div>
             {{image_names}}
             <hr>
-            {% for image_name in image_names %}
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <img class="img-responsive" src=" {{url_for('send_image', filename=image_name)}}">
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="galleria">
+                    {% for image_name in image_names %}
+                    <!--<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                        <img class="img-responsive" src=" {{url_for('send_image', filename=image_name)}}">
+                    </div>-->
+                    <div id="demoLightbox" class="lightbox hide fade"  tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class='lightbox-content'>
+                            <img class="img-responsive" src=" {{url_for('send_image', filename=image_name)}}">
+                            <div class="lightbox-caption"><p>Your caption here</p></div>
+                        </div>
+                    </div>                   
+                    {% endfor %}
+                </div>                
             </div>
-            {% endfor %}
         </div>
          <hr />
        <footer>
             <p>&copy; {{ year }} - My Flask Application by JEE SOO KIM</p>
        </footer>
     </div>
-    <script src="../static/scripts/jquery-1.10.2.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+     <script>
+        (function() { 
+            //if (Galleria) { $("body").text('Galleria works') }
+            Galleria.loadTheme('../static/scripts/galleria/themes/classic/galleria.classic.min.js');
+            Galleria.run('.galleria');
+        }());
+
+        Galleria.configure({
+            imageCrop: true,
+            transition: 'fade'
+        });
+    </script>
+    
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>-->
+
 </body>
 </html>

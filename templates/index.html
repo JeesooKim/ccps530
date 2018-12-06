@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Flask App</title>    
+    <title>Flask Lab | Home</title>    
         
     <!--<link href="../static/content/bootstrap.min.css" rel="stylesheet" media="screen">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -17,7 +17,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <h1 class="navbar-brand">Wordcount 3000</h1>
+                <h1 class="navbar-brand"><a href="/">Flask Lab</a> || </h1>
                 <div id="navMenu">
                     <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
                 </div>
@@ -26,8 +26,8 @@
     </div>
     <div class="container body-content">
       <div class="row">
-          <div class="col-sm-5 col-sm-offset=7">
-            <h1>Search History</h1>
+          <div class="col-sm-12">
+            <h1>Wordcount 3000 - Search History</h1>
             <hr>
              {% if results %}
                 <div id="results">
@@ -36,8 +36,8 @@
                     <thead>
                       <tr>
                             <th>ID</th>
-                        <th>Url</th>
-                        <th>JSON</th>
+                            <th>Url</th>
+                            <th>JSON</th>
                             <th>Timestamp</th>
                       </tr>
                     </thead>
@@ -45,7 +45,8 @@
                       <tr>
                         <td>{{ result[0] }}</td>
                             <td><a href="{{ result[1] }}" target="_blank">{{ result[1] }}</a></td>
-                            <td>{{ result[2] }}</td>
+                            <td><a href="details/{{ result[0] }}" target="_blank">details</a>
+                            </td>
                             <td>{{ result[3] }}</td>
                       </tr>
                     {% endfor %}
@@ -55,51 +56,27 @@
           </div>
       </div>
       
-      <!--<div class="row">
-            <div class="col-sm-5 col-sm-offset-1">
-                <h1>Users</h1>
-            </div>
-            <div class="col-sm-5 col-sm-offset-1">
-                 {% if users %}
-                    <div id="results">
-                      <table class="table table-striped" style="max-width: 300px;">
-                        <thead>
-                          <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>Created time</th>
-                          </tr>
-                        </thead>
-                        {% for user in users %}
-                          <tr>
-                            <td>{{ user[0] }}</td>
-                            <td>{{ user[1] }}</a></td>
-                            <td>{{ user[2] }}</td>
-                            <td>{{ user[3] }}</td>
-                          </tr>
-                        {% endfor %}
-                      </table>
-                    </div>
-                  {% endif %}
-            </div>
-        </div>
-       -->
+     
        <hr />
        <footer>
             <p>&copy; {{ year }} - My Flask Application by JEE SOO KIM</p>
        </footer>
     </div>
         
-    <script src="../static/scripts/jquery-1.10.2.min.js"></script>
-    <!--<script src="../static/scripts/bootstrap.min.js"></script>-->
+        
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!--<script src="../static/scripts/jquery-1.10.2.min.js"></script>    -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
     <script src="../static/scripts/respond.js"></script>
     
-    <script src="../static/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="../static/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <!--<script src="../static/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="../static/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>-->
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
 
     <script type="text/javascript">
       $(document).ready(function() {
@@ -113,7 +90,7 @@
               },{
                   targets: [ 2 ],
                   //orderData: [ 0, 1 ]
-                  visible: false,
+                  //visible: false,
                   orderable:false
               }]
           });

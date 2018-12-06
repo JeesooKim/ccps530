@@ -8,21 +8,18 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from stop_words import stops
 from collections import Counter
 from bs4 import BeautifulSoup
-#from datetime import timedelta
-#import time
-#from datetime import date
 from sqlalchemy import create_engine
+import itertools
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
 
-engine =db.create_engine(os.environ['DATABASE_URL'])
+engine =db.create_engine("postgresql://localhost/wordcount_dev")
 from models import Result
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 YEAR=2018
-
 @app.route('/')
 def index():    
     """ query data from the results table """
@@ -44,7 +41,7 @@ def index():
         #print(ResultProxy)
         ResultSet = ResultProxy.fetchall()
         #ResultSet[:3]
-        
+
         '''
         users = db.Table('users', metadata, autoload=True, autoload_with=engine)
         query2 = db.select([users])            
@@ -53,21 +50,20 @@ def index():
         '''
 
         '''
-        params = config()
-        conn = psycopg2.connect(**params)
-        cur = conn.cursor()
-        cur.execute("SELECT url, timestamp FROM results")
-        data= cur.fetchall()
-
-        print("The number of records: ", cur.rowcount)
-        '''
-        #row = cur.fetchone()
- 
-        #while row is not None:
-        #    print(row)
-        #    row = cur.fetchone()
- 
-        #cur.close()
+        for record in ResultSet:
+            i=0;
+            for c in record:
+                if i==2:
+                    #print("\n*****************\n")
+                    sorted_json_results = sorted(
+                        c.items(),
+                        key=operator.itemgetter(1),
+                        reverse=True
+                    )[:10]
+                    #print(sorted_json_results)
+                    #print("\n*****************\n")
+                i += 1
+        '''     
         connection.close()
     #except (Exception, psycopg2.DatabaseError) as error:
     except (Exception, engine.DatabaseError) as error:
@@ -116,7 +112,9 @@ def wordcount():
             raw_word_count = Counter(raw_words)
             # stop words
             no_stop_words = [w for w in raw_words if w.lower() not in stops]
-            no_stop_words_count = Counter(no_stop_words)            
+            no_stop_words_count = Counter(no_stop_words)
+            print(type(no_stop_words_count))
+            print(no_stop_words_count)
 
             # save the results
             results = sorted(
@@ -135,12 +133,50 @@ def wordcount():
                 #db.session.commit()
             except:
                 errors.append("Unable to add item to database.")
-    return render_template('wordcount.html', errors=errors, results=results,year=YEAR)
+    return render_template('wordcount.html', errors=errors, results=results, year=YEAR)
     #return render_template('wordcount', errors=errors, results=results)
+
+
+@app.route('/details/<id>')
+def details(id):
+    connection = None
+    try:
+        #https://towardsdatascience.com/sqlalchemy-python-tutorial-79a577141a91
+        rowid=id
+        #print(rowid)
+        connection = engine.connect()
+
+        metadata=db.MetaData()
+        results = db.Table('results', metadata, autoload=True, autoload_with=engine)
+        
+        #query = db.select([results.columns.url, results.columns.result_no_stop_words, results.columns.timestamp]).where(results.columns.id == rowid)
+        query = db.select([results.columns.result_no_stop_words]).where(results.columns.id == rowid)
+        ResultProxy = connection.execute(query)        
+        #ResultSet = ResultProxy.fetchall()
+        ResultSet = ResultProxy.fetchone()
+        print(type(ResultSet))
+        sorted_json_results = ResultSet
+        #sorted_json_results = sorted(
+        #        ResultSet.items(),
+        #        key=operator.itemgetter(1),
+        #        reverse=True
+        #)[:10]
+
+        print(sorted_json_results)
+        connection.close()
+    #except (Exception, psycopg2.DatabaseError) as error:
+    except (Exception, engine.DatabaseError) as error:
+        print("Error!")
+        print(error)
+    finally:
+        if connection is not None:
+            connection.close()
+    return render_template("details.html", sorted_json_results=sorted_json_results, year=YEAR)
+    #return render_template("details.html", url=url, timestamp=timestamp, sorted_json_results=sorted_json_results, year=YEAR)
 
 @app.route("/image")
 def image():
-    return render_template("upload.html",year=YEAR)
+    return render_template("upload.html", year=YEAR)
 
 @app.route("/upload", methods=['POST'])
 def upload():
@@ -169,10 +205,9 @@ def upload():
         destination = "/".join([target, filename])
         print ("Accept incoming file:", filename)
         print ("Save it to:", destination)
-        upload.save(destination)
-        
+        upload.save(destination)        
 
-    return render_template("complete.html",image_name=filename,year=YEAR)
+    return render_template("complete.html",image_name=filename, year=YEAR)
 
 @app.route('/upload/<filename>')
 def send_image(filename):
@@ -182,7 +217,7 @@ def send_image(filename):
 def get_gallery():
     image_names = os.listdir('./images')
     print(image_names)
-    return render_template("gallery.html", image_names=image_names,year=YEAR)
+    return render_template("gallery.html", image_names=image_names, year=YEAR)
 
 if __name__ == '__main__':
     app.run()

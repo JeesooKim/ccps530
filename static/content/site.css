@@ -51,3 +51,9 @@ input[type="checkbox"].input-validation-error {
 .body-content{
     margin-top: 2em;
 }
+
+.navbar-header,
+.navbar-header a {
+    text-decoration: none;
+    color: #FFF;
+}

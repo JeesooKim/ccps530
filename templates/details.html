@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask Lab - File Upload</title>
+    <title>Flask Lab - Wordcount Details</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
     <link href="../static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">
@@ -24,13 +24,25 @@
     <div class="container body-content">
       <div class="row">
           <div class="col-sm-7">
-            <h1>File uploaded successfully!</h1>
+            <h1></h1>
+            {% if sorted_json_results %}
+                <h2>Frequencies</h2>
+                <br>
+                <div id="results">
+                  <table class="table table-striped" style="max-width: 300px;">
+                      <tr>
+                        <td>{{ sorted_json_results }}</td>                        
+                      </tr>
+                    
+                  </table>
+                </div>
+              {% endif %}
           </div>
       </div>
       
        <hr />
        <footer>
-            <p>&copy; 2018 - My Flask Application by JEE SOO KIM</p>
+            <p>&copy; {{ year }} - My Flask Application by JEE SOO KIM</p>
        </footer>
     </div>
 </body>
