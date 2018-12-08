@@ -31,7 +31,7 @@ https://startbootstrap.com/bootstrap-resources#plugins-other
 Bootstrap 4
 As with Bootstrap 3, DataTables can also be integrated seamlessly with Bootstrap 4. This integration is done simply by including the DataTables Bootstrap 4 files (CSS and JS) which sets the defaults needed for DataTables to be initialised as normal, as shown in this example.
 https://datatables.net/examples/styling/bootstrap4.html
-(2) 
+(2) Boostrap layout -buttons
 
 4.	jQuery library features
 (1)	Galleria Galleria-JavaScript Image Gallery
