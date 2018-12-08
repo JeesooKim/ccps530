@@ -9,7 +9,8 @@
     <!--<link href="../static/content/bootstrap.min.css" rel="stylesheet" media="screen">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
-    <link href="../static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">
+    <link href="../static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">    
+    <link rel="stylesheet" href="../static/ladda-bootstrap/dist/ladda-themeless.min.css">
     <link href="../static/content/site.css" rel="stylesheet" media="screen">
     <script src="../static/scripts/modernizr-2.6.2.js"></script>
 </head>
@@ -19,7 +20,7 @@
             <div class="navbar-header">
                 <h1 class="navbar-brand"><a href="/">Flask Lab</a> || </h1>
                 <div id="navMenu">
-                    <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
+                    <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image" class="active">Image Upload</a> | <a href="gallery">Image Gallery</a> | <a href="users">Users</a>
                 </div>
             </div>
         </div>
@@ -29,12 +30,14 @@
             <div class="col-sm-5 col-sm-7-offset">
                 <h1>Image Upload</h1>
                 <hr>
+                <!--<form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" class="dropzone">-->
                 <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-                <strong>Files:</strong><br>
-                <input id="file-picker" type="file" name="file" accept="image/*" multiple>
-                <div id="msg"></div>
-                <input type="submit" value="Upload!" id="upload-button">
-            </form>
+                    <strong>Files:</strong><br>
+                        <input id="file-picker" type="file" name="file" accept="image/*" multiple>
+                        <div id="msg"></div>
+                        <button id="upload-button" class="ladda-button" data-style="expand-right" data-color="green" data-size="medium" data-spinner-size="40" data-spinner-color="#ff0000" type="submit"><span class="ladda-label">Submit</span></button>
+                        <!--<input type="submit" value="Upload!" id="upload-button">-->
+                </form>
             </div>            
         </div>
          <hr />
@@ -71,10 +74,13 @@
 
     </script>
     <script src="../static/scripts/jquery-1.10.2.min.js"></script>
+    <script src="../static/ladda-bootstrap/dist/spin.min.js"></script>
+    <script src="../static/ladda-bootstrap/dist/ladda.min.js"></script>
+    
     <script src="../static/scripts/respond.js"></script>
     
     <!--<script src="../static/scripts/bootstrap.min.js"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>    
 </html>

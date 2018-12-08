@@ -19,15 +19,15 @@
             <div class="navbar-header">
                 <h1 class="navbar-brand"><a href="/">Flask Lab</a> || </h1>
                 <div id="navMenu">
-                    <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
+                    <a href="/">Home</a> | <a href="wordcount" class="active">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a> | <a href="users">Users</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">    	
+    <div class="container body-content">
     	<div class="row">
         	<div class="col-sm-5">
-	        	<h1>Wordcount 3000</h1>
+	        	<h1>Wordcount 3000</h1><br/>
 			      <form role="form" method='POST' action="{{ url_for('wordcount') }}">
 			        <div class="form-group">
 			          <input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" autofocus required>

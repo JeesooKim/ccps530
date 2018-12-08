@@ -57,3 +57,8 @@ input[type="checkbox"].input-validation-error {
     text-decoration: none;
     color: #FFF;
 }
+
+.active{
+    color: yellow !important;
+
+}
