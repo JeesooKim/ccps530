@@ -6,7 +6,7 @@
     <title>Flask Lab - Wordcount Details</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">    
-    <link href="../static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet" media="screen">
+    
     <link href="../static/content/site.css" rel="stylesheet" media="screen">
     <script src="../static/scripts/modernizr-2.6.2.js"></script>
 </head>
@@ -16,7 +16,7 @@
             <div class="navbar-header">
                 <h1 class="navbar-brand"><a href="/">Flask Lab</a> || </h1>
                 <div id="navMenu">
-                    <a href="/">Home</a> | <a href="wordcount">Counting words</a> | <a href="image">Image Upload</a> | <a href="gallery">Image Gallery</a>
+                    <a href="/">Home</a> | <a href="/wordcount">Counting words</a> | <a href="/image">Image Upload</a> | <a href="/gallery">Image Gallery</a>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
                 <div id="results">
                   <table class="table table-striped" style="max-width: 300px;">
                       <tr>
-                        <td>{{ sorted_json_results }}</td>                        
+                        <td><span id="sortedJson">{{ sorted_json_results }}</span></td>
                       </tr>
                     
                   </table>
@@ -39,11 +39,17 @@
               {% endif %}
           </div>
       </div>
-      
        <hr />
        <footer>
             <p>&copy; {{ year }} - My Flask Application by JEE SOO KIM</p>
        </footer>
     </div>
+      
+    <script src="../static/scripts/jquery-1.10.2.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+    <script src="../static/scripts/respond.js"></script>    
+    
 </body>
 </html>
