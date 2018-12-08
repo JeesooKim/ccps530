@@ -2,15 +2,15 @@
 Web Systems Development
 
 Name: JEE SOO KIM
-\r
+\n\r
 Online Demo: https://wordcount-pro-jsk.herokuapp.com/
-\r
+\n\r
 Project Title: Flask App – Word count with Image Gallery
-\r
+\n\r
 Course: CCPS530
-\r
+\n\r
 Instructor: Ghassem Tofighi
-\r\r
+\n\r\r
 Requirements:
 1.	Python/PHP Programming
 •	Python programming
