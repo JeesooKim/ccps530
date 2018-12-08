@@ -2,9 +2,13 @@
 Web Systems Development
 
 Name: JEE SOO KIM
+
 Online Demo: https://youtu.be/JYp2B22QHaE
+
 Project Title: Flask App – Word count with Image Gallery
+
 Course: CCPS530
+
 Instructor: Ghassem Tofighi
 
 Requirements:
