@@ -390,12 +390,12 @@ def user_update(id):
                 results = connection.execute(query)
             '''
             
-            if not updatename:
+            #if not updatename:
                 #updatename = request.form.get('username')
-                query = db.update(users).values(username = updatename)
-                query = query.where(users.columns.Id == id)
-                results = connection.execute(query)
-                    #record.username = updatename
+            query = db.update(users).values(username = updatename)
+            query = query.where(users.columns.Id == id)
+            results = connection.execute(query)
+                #record.username = updatename
                 
             results = connection.execute(db.select([users])).fetchall()
             df = pd.DataFrame(results)
